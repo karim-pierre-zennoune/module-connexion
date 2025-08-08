@@ -4,7 +4,7 @@ informations. Ce formulaire est par défaut pré-rempli avec les informations qu
 sont actuellement stockées en base de données. -->
 
 
-<?php require_once "./utils.php" ?>
+<?php require_once "./dbmanager.php" ?>
 
 <?php
 session_start();
@@ -59,10 +59,10 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link href="./style.css" rel="stylesheet" /> -->
+    <link href="./style.css" rel="stylesheet" />
 
 
-    <title>Inscription</title>
+    <title>Change Password</title>
 </head>
 
 <body>
@@ -70,17 +70,17 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
     <div>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div>
-                <label for="form-old-password">password</label>
+                <label for="form-old-password" hidden>password</label>
                 <div><input id="form-old-password" type="text" name="form-old-password" placeholder="password"
                         autofocus></div>
             </div>
             <div>
-                <label for="form-new-password">new password</label>
+                <label for="form-new-password" hidden>new password</label>
                 <div><input id="form-new-password" type="text" name="form-new-password" placeholder="new password">
                 </div>
             </div>
             <div>
-                <label for="form-confirm-password">confirm new password</label>
+                <label for="form-confirm-password" hidden>confirm new password</label>
                 <div><input id="form-confirm-password" type="text" name="form-confirm-password"
                         placeholder="confirm new password"></div>
             </div>

@@ -4,7 +4,7 @@ Le formulaire doit contenir l’ensemble des champs présents dans la table
 utilisateur remplit ce formulaire, les données sont insérées dans la base de
 données et l’utilisateur est redirigé vers la page de connexion. -->
 
-<?php require_once "./utils.php" ?>
+<?php require_once "./dbmanager.php" ?>
 
 <?php
 
@@ -46,8 +46,6 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
         }
     }
 }
-
-
 ?>
 
 
@@ -70,25 +68,25 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
     <div>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div>
-                <label for="form-login">login</label>
+                <label for="form-login" hidden>login</label>
                 <div><input id="form-login" type="text" name="login" placeholder="login" autofocus></div>
             </div>
             <div>
-                <label for="form-prenom">prenom</label>
+                <label for="form-prenom" hidden>prenom</label>
                 <div><input id="form-prenom" type="text" name="prenom" placeholder="prenom">
                 </div>
             </div>
             <div>
-                <label for="form-nom">nom</label>
+                <label for="form-nom" hidden>nom</label>
                 <div><input id="form-nom" type="text" name="nom" placeholder="nom"></div>
             </div>
             <div>
-                <label for="form-password">password</label>
+                <label for="form-password" hidden>password</label>
                 <div><input id="form-password" type="text" name="password" placeholder="password">
                 </div>
             </div>
             <div>
-                <label for="form-password-confirm">confirm password</label>
+                <label for="form-password-confirm" hidden>confirm password</label>
                 <div><input id="form-password-confirm" type="text" name="password-confirm"
                         placeholder="confirm password">
                 </div>

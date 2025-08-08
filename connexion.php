@@ -6,7 +6,7 @@ l’utilisateur est considéré comme connecté et une (ou plusieurs) variables 
 session sont créées. -->
 
 
-<?php require_once "./utils.php" ?>
+<?php require_once "./dbmanager.php" ?>
 
 <?php
 session_start();
@@ -52,7 +52,7 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link href="./style.css" rel="stylesheet" /> -->
+    <link href="./style.css" rel="stylesheet" />
 
     <title>Connexion</title>
 </head>
@@ -73,12 +73,12 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
     <div>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div>
-                <label class="visually-hidden" for="form-login">login</label>
+                <label for="form-login" hidden>login</label>
                 <div><input id="form-login" type="text" name="login" placeholder="login" autofocus></div>
             </div>
 
             <div>
-                <label class="visually-hidden" for="form-password">password</label>
+                <label for="form-password" hidden>password</label>
                 <div><input id="form-password" type="text" name="password" placeholder="password">
                 </div>
             </div>

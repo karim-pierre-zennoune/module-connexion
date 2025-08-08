@@ -4,7 +4,7 @@ de lister l’ensemble des informations des utilisateurs présents dans la base 
 données. -->
 
 
-<?php require_once "./utils.php" ?>
+<?php require_once "./dbmanager.php" ?>
 
 <?php
 session_start();
@@ -25,9 +25,6 @@ if (!$ret['result']) { ?>
     <?php
     exit();
 }
-
-// var_dump($ret['data']);
-// exit();
 ?>
 
 
@@ -69,7 +66,7 @@ if (!$ret['result']) { ?>
         </tbody>
     </table>
 
-    <!-- 
+
     <div>
 
         <?php
@@ -81,7 +78,7 @@ if (!$ret['result']) { ?>
         ?>
 
 
-    </div> -->
+    </div>
 
 
 </body>

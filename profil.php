@@ -66,18 +66,18 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
     <div>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div>
-                <label for="form-login">login</label>
+                <label for="form-login" hidden>login</label>
                 <div><input id="form-login" type="text" name="login" placeholder="login"
                         value="<?= $_SESSION["login"] ?? "" ?>" autofocus></div>
             </div>
             <div>
-                <label for="form-prenom">prenom</label>
+                <label for="form-prenom" hidden>prenom</label>
                 <div><input id="form-prenom" type="text" name="prenom" value="<?= $_SESSION["prenom"] ?? "" ?>"
                         placeholder="prenom">
                 </div>
             </div>
             <div>
-                <label for="form-nom">nom</label>
+                <label for="form-nom" hidden>nom</label>
                 <div><input id="form-nom" type="text" name="nom" value="<?= $_SESSION["nom"] ?? "" ?>"
                         placeholder="nom"></div>
             </div>
