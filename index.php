@@ -8,17 +8,8 @@ informations. Ce formulaire est par défaut pré-rempli avec les informations qu
 sont actuellement stockées en base de données. -->
 
 
-<?php require_once "./dbmanager.php" ?>
+<?php require_once "./sessionmanager.php" ?>
 
-<?php
-session_start();
-if (isset($_SESSION["id"])) {
-
-
-}
-
-
-?>
 
 
 
@@ -37,7 +28,17 @@ if (isset($_SESSION["id"])) {
 
 <body>
 
+    <?php include "navbar.php"; ?>
 
+
+    <?php
+    if (isset($_SESSION["login"])) { ?>
+
+        <p class="warning">Welcome <?= $_SESSION["login"] ?> </p>
+
+        <?php
+    }
+    ?>
 
 
 </body>

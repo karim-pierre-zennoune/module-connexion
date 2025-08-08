@@ -7,9 +7,9 @@ session sont créées. -->
 
 
 <?php require_once "./dbmanager.php" ?>
+<?php require_once "./sessionmanager.php" ?>
 
 <?php
-session_start();
 $form_ready = true;
 if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
     $field_list = ["login", "password"];
@@ -58,18 +58,7 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
 </head>
 
 <body>
-    <?php
-    if (isset($_SESSION["login"])) {
-
-        echo "Welcome " . htmlspecialchars($_SESSION["login"]) . ".";
-
-    }
-
-
-    ?>
-
-
-
+    <?php include "navbar.php"; ?>
     <div>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div>

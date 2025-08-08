@@ -4,10 +4,10 @@ informations. Ce formulaire est par défaut pré-rempli avec les informations qu
 sont actuellement stockées en base de données. -->
 
 
-<?php require_once "./utils.php" ?>
+<?php require_once "./dbmanager.php" ?>
+<?php require_once "./sessionmanager.php" ?>
 
 <?php
-session_start();
 if (!isset($_SESSION["id"])) {
     ?>
     <div class="warning">You need to be logged in to view this page</div>
@@ -55,14 +55,14 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link href="./style.css" rel="stylesheet" /> -->
+    <link href="./style.css" rel="stylesheet" />
 
 
     <title>Inscription</title>
 </head>
 
 <body>
-
+    <?php include "navbar.php"; ?>
     <div>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div>

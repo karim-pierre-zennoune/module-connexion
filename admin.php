@@ -5,10 +5,10 @@ données. -->
 
 
 <?php require_once "./dbmanager.php" ?>
+<?php require_once "./sessionmanager.php" ?>
 
 <?php
-session_start();
-if (!isset($_SESSION["lodin"]) && $_SESSION["login"] !== "admin") {
+if (!isset($_SESSION["login"]) && $_SESSION["login"] !== "admin") {
     ?>
     <div class="warning">This page is only available for the administrator</div>
     <div class="warning">Redirecting to connexion page</div>
@@ -42,6 +42,10 @@ if (!$ret['result']) { ?>
 
 <body>
 
+
+    <?php include "navbar.php"; ?>
+
+
     <table>
         <thead>
             <tr>
@@ -69,13 +73,7 @@ if (!$ret['result']) { ?>
 
     <div>
 
-        <?php
-        if (!$form_ready) {
-            foreach ($error_messages as $err) { ?>
-                <p> <?= $err ?> </p> <?php
-            }
-        }
-        ?>
+
 
 
     </div>
