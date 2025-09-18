@@ -3,12 +3,10 @@ Cette page possède un formulaire permettant à l’utilisateur de modifier ses
 informations. Ce formulaire est par défaut pré-rempli avec les informations qui
 sont actuellement stockées en base de données. -->
 
-
-<?php require_once "./dbmanager.php" ?>
-<?php require_once "./sessionmanager.php" ?>
+<?php require_once "./managers/sessionmanager.php" ?>
 
 <?php
-if (!isset($_SESSION["id"])) {
+if (!SessionManager::is_logged()) {
     ?>
     <div class="warning">You need to be logged in to view this page</div>
     <div class="warning">Redirecting to connexion page</div>
@@ -24,34 +22,27 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
 
     foreach ($field_list as $field) {
         if (!(isset($_POST[$field]) && !empty(trim($_POST[$field])))) {
-            echo $_POST[$field];
             $form_ready = false;
             $error_messages[] = "field " . $field . " cannot be empty.<br/>";
         }
     }
 
-    if (
-        !(isset($_POST["form-new-password"]) && isset($_POST["form-confirm-password"])
-            && trim($_POST["form-new-password"]) === trim($_POST["form-confirm-password"]))
-    ) {
+    if (trim($_POST["form-new-password"]) !== trim($_POST["form-confirm-password"])) {
         $form_ready = false;
         $error_messages[] = "passwords don't match.<br/>";
     }
 
     if ($form_ready) {
         $ret = DbManager::updateUserPassword(
-            htmlspecialchars($_POST["form-old-password"]),
-            htmlspecialchars($_POST["form-new-password"]),
-            htmlspecialchars($_SESSION["id"]),
+            $_POST["form-old-password"],
+            $_POST["form-new-password"],
+            $_SESSION["id"],
         );
         $form_ready = false;
         $error_messages[] = $ret['error'];
     }
 }
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -91,7 +82,6 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
 
 
     <div>
-
         <?php
         if (!$form_ready) {
             foreach ($error_messages as $err) { ?>
@@ -99,11 +89,7 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
             }
         }
         ?>
-
-
     </div>
-
-
 </body>
 
 </html>

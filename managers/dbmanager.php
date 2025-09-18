@@ -8,7 +8,7 @@ class DbManager
     public static function addUser($login, $prenom, $nom, $password)
     {
         if (self::$pdo === null) {
-            self::connect_to_db();
+            self::connectToDb();
         }
 
         $sql = "SELECT id FROM utilisateurs WHERE login = :login";
@@ -16,7 +16,10 @@ class DbManager
             $stmt->bindParam(":login", $login, PDO::PARAM_STR);
             if ($stmt->execute()) {
                 if ($stmt->rowCount() == 1) {
-                    return "login already exists";
+                    return [
+                        "result" => false,
+                        "error" => "login already exists"
+                    ];
                 }
             } else {
                 throw new Exception('Something went wrong');
@@ -38,15 +41,17 @@ class DbManager
             unset($stmt);
         }
 
-        return "";
-
+        return [
+            "result" => true,
+            "error" => ""
+        ];
     }
 
 
     public static function passwordCheck($id, $password)
     {
         if (self::$pdo === null) {
-            self::connect_to_db();
+            self::connectToDb();
         }
 
         $sql = "SELECT password FROM utilisateurs WHERE id = :id";
@@ -55,11 +60,15 @@ class DbManager
             if ($stmt->execute()) {
                 if ($stmt->rowCount() == 1) {
                     if ($row = $stmt->fetch()) {
-                        if (password_verify($password, $row["password"])) {
-                            return true;
-                        } else {
-                            return false;
-                        }
+
+                        return password_verify($password, $row["password"]);
+                        // if (password_verify($password, $row["password"])) {
+                        //     return true;
+                        // } else {
+                        //     return false;
+                        // }
+
+
                     }
 
                 }
@@ -73,7 +82,7 @@ class DbManager
     public static function connectUser($login, $password)
     {
         if (self::$pdo === null) {
-            self::connect_to_db();
+            self::connectToDb();
         }
 
 
@@ -117,7 +126,7 @@ class DbManager
     public static function updateUserInfos($login, $prenom, $nom, $id)
     {
         if (self::$pdo === null) {
-            self::connect_to_db();
+            self::connectToDb();
         }
         $sql = "UPDATE utilisateurs SET login = :login, prenom = :prenom, nom = :nom WHERE id = :id";
 
@@ -134,7 +143,7 @@ class DbManager
     public static function updateUserPassword($password, $newpassword, $id)
     {
         if (self::$pdo === null) {
-            self::connect_to_db();
+            self::connectToDb();
         }
 
         if (self::passwordCheck($id, $password)) {
@@ -158,7 +167,7 @@ class DbManager
             ];
         }
     }
-    private static function connect_to_db()
+    private static function connectToDb()
     {
         define('DB_SERVER', 'localhost');
         define('DB_USERNAME', 'root');
@@ -172,17 +181,15 @@ class DbManager
         }
     }
 
-    public static function getFullDbDump()
+    public static function getAllUsers()
     {
         if (self::$pdo === null) {
-            self::connect_to_db();
+            self::connectToDb();
         }
         $sql = "SELECT * FROM utilisateurs";
         if ($stmt = self::$pdo->prepare($sql)) {
             if ($stmt->execute()) {
-
                 if ($data = $stmt->fetchAll(PDO::FETCH_ASSOC)) {
-
                     return [
                         "result" => true,
                         "data" => $data
@@ -194,11 +201,42 @@ class DbManager
                         "error" => "Could not fetch data"
                     ];
                 }
-
             }
         }
         unset($stmt);
     }
+
+    public static function getUserInfos(int $id)
+    {
+        if (self::$pdo === null) {
+            self::connectToDb();
+        }
+
+        $sql = "SELECT * FROM utilisateurs WHERE id = :id";
+        if ($stmt = self::$pdo->prepare($sql)) {
+            $stmt->bindParam(":id", $id, PDO::PARAM_STR);
+            $stmt->execute();
+            if ($row = $stmt->fetch()) {
+                unset($stmt);
+                return [
+                    "result" => true,
+                    "data" => [
+                        "id" => $row["id"],
+                        "login" => $row["login"],
+                        "prenom" => $row["prenom"],
+                        "nom" => $row["nom"],
+                    ]
+                ];
+            } else {
+                unset($stmt);
+                return [
+                    "result" => false,
+                    "error" => "Invalid credentials"
+                ];
+            }
+        }
+    }
+
 }
 
 ?>

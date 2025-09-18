@@ -8,7 +8,7 @@ informations. Ce formulaire est par défaut pré-rempli avec les informations qu
 sont actuellement stockées en base de données. -->
 
 
-<?php require_once "./sessionmanager.php" ?>
+<?php require_once "./managers/sessionmanager.php" ?>
 
 
 
@@ -32,13 +32,17 @@ sont actuellement stockées en base de données. -->
 
 
     <?php
-    if (isset($_SESSION["login"])) { ?>
+    if (SessionManager::is_logged() && isset($_SESSION["prenom"])) { ?>
 
-        <p class="warning">Welcome <?= $_SESSION["login"] ?> </p>
+        <p class="warning">Welcome <?= $_SESSION["prenom"] ?> </p>
 
         <?php
     }
     ?>
+
+
+    <!-- TODO page presentation -->
+    <p>Site du projet Module Connexion de LaPlateforme_</p>
 
 
 </body>

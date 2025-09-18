@@ -3,22 +3,21 @@ Cette page est accessible UNIQUEMENT pour l’utilisateur “admin”. Elle perm
 de lister l’ensemble des informations des utilisateurs présents dans la base de
 données. -->
 
-
-<?php require_once "./dbmanager.php" ?>
-<?php require_once "./sessionmanager.php" ?>
+<?php require_once "./managers/sessionmanager.php" ?>
 
 <?php
-if (!isset($_SESSION["login"]) && $_SESSION["login"] !== "admin") {
+
+
+if (!SessionManager::is_admin()) {
     ?>
     <div class="warning">This page is only available for the administrator</div>
-    <div class="warning">Redirecting to connexion page</div>
+    <div class="warning">Redirecting to home page</div>
     <?php
-    header("refresh:5; url=./connexion.php");
+    header("refresh:5; url=./index.php");
     exit();
 }
 
-
-$ret = DbManager::getFullDbDump();
+$ret = DbManager::getAllUsers();
 
 if (!$ret['result']) { ?>
     <div class="warning"> ERROR: <?= $ret['error'] ?> </div>
@@ -41,10 +40,7 @@ if (!$ret['result']) { ?>
 </head>
 
 <body>
-
-
     <?php include "navbar.php"; ?>
-
 
     <table>
         <thead>
@@ -57,7 +53,6 @@ if (!$ret['result']) { ?>
                 } ?>
             </tr>
         </thead>
-
         <tbody>
             <?php foreach ($ret['data'] as $row) { ?>
                 <tr>
@@ -69,16 +64,6 @@ if (!$ret['result']) { ?>
             <?php } ?>
         </tbody>
     </table>
-
-
-    <div>
-
-
-
-
-    </div>
-
-
 </body>
 
 </html>

@@ -5,11 +5,19 @@ est validé, s’il existe un utilisateur en bdd correspondant à ces informatio
 l’utilisateur est considéré comme connecté et une (ou plusieurs) variables de
 session sont créées. -->
 
-
-<?php require_once "./dbmanager.php" ?>
-<?php require_once "./sessionmanager.php" ?>
+<?php require_once "./managers/sessionmanager.php" ?>
 
 <?php
+
+if (SessionManager::is_logged()) {
+    ?>
+    <div class="warning">You are already logged in</div>
+    <div class="warning">Redirecting to home page</div>
+    <?php
+    header("refresh:5; url=./index.php");
+    exit();
+}
+
 $form_ready = true;
 if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
     $field_list = ["login", "password"];
@@ -23,28 +31,14 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
     }
 
     if ($form_ready) {
-        $ret = DbManager::connectUser(
-            htmlspecialchars($_POST["login"]),
-            htmlspecialchars($_POST["password"])
-        );
-
-        if ($ret['result'] === true) {
-            $_SESSION['id'] = $ret['data']['id'];
-            $_SESSION['login'] = $ret['data']['login'];
-            $_SESSION['prenom'] = $ret['data']['prenom'];
-            $_SESSION['nom'] = $ret['data']['nom'];
-        } else {
+        $ret = SessionManager::login($_POST["login"], $_POST["password"]);
+        if (!$ret["result"]) {
             $form_ready = false;
             $error_messages[] = $ret['error'];
         }
     }
 }
-
-
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -53,7 +47,6 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./style.css" rel="stylesheet" />
-
     <title>Connexion</title>
 </head>
 
@@ -75,10 +68,7 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
             <input type="submit" name="submit">
         </form>
     </div>
-
-
     <div>
-
         <?php
         if (!$form_ready) {
             foreach ($error_messages as $err) { ?>
@@ -86,11 +76,7 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
             }
         }
         ?>
-
-
     </div>
-
-
 </body>
 
 </html>

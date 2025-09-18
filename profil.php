@@ -4,11 +4,10 @@ informations. Ce formulaire est par défaut pré-rempli avec les informations qu
 sont actuellement stockées en base de données. -->
 
 
-<?php require_once "./dbmanager.php" ?>
-<?php require_once "./sessionmanager.php" ?>
+<?php require_once "./managers/sessionmanager.php" ?>
 
 <?php
-if (!isset($_SESSION["id"])) {
+if (!SessionManager::is_logged()) {
     ?>
     <div class="warning">You need to be logged in to view this page</div>
     <div class="warning">Redirecting to connexion page</div>
@@ -31,17 +30,22 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
 
     if ($form_ready) {
         DbManager::updateUserInfos(
-            htmlspecialchars($_POST["login"]),
-            htmlspecialchars($_POST["prenom"]),
-            htmlspecialchars($_POST["nom"]),
-            htmlspecialchars($_SESSION["id"]),
+            $_POST["login"],
+            $_POST["prenom"],
+            $_POST["nom"],
+            $_SESSION["id"],
 
         );
         $_SESSION["login"] = $_POST["login"];
         $_SESSION["prenom"] = $_POST["prenom"];
-        $_SESSION["nom"] = $_POST["nom"];
     }
 }
+
+$form_prefill = DbManager::getUserInfos($_SESSION["id"]);
+if (!$form_prefill["result"]) {
+    die();
+}
+
 
 
 ?>
@@ -68,17 +72,17 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
             <div>
                 <label for="form-login" hidden>login</label>
                 <div><input id="form-login" type="text" name="login" placeholder="login"
-                        value="<?= $_SESSION["login"] ?? "" ?>" autofocus></div>
+                        value="<?= $form_prefill["data"]["login"] ?>" autofocus></div>
             </div>
             <div>
                 <label for="form-prenom" hidden>prenom</label>
-                <div><input id="form-prenom" type="text" name="prenom" value="<?= $_SESSION["prenom"] ?? "" ?>"
+                <div><input id="form-prenom" type="text" name="prenom" value="<?= $form_prefill["data"]["prenom"] ?>"
                         placeholder="prenom">
                 </div>
             </div>
             <div>
                 <label for="form-nom" hidden>nom</label>
-                <div><input id="form-nom" type="text" name="nom" value="<?= $_SESSION["nom"] ?? "" ?>"
+                <div><input id="form-nom" type="text" name="nom" value="<?= $form_prefill["data"]["nom"] ?>"
                         placeholder="nom"></div>
             </div>
 

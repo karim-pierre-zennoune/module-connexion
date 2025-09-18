@@ -4,9 +4,19 @@ Le formulaire doit contenir l’ensemble des champs présents dans la table
 utilisateur remplit ce formulaire, les données sont insérées dans la base de
 données et l’utilisateur est redirigé vers la page de connexion. -->
 
-<?php require_once "./dbmanager.php" ?>
+<?php require_once "./managers/sessionmanager.php" ?>
 
 <?php
+
+
+if (SessionManager::is_logged()) {
+    ?>
+    <div class="warning">You are already logged in</div>
+    <div class="warning">Redirecting to home page</div>
+    <?php
+    header("refresh:5; url=./index.php");
+    exit();
+}
 
 $form_ready = true;
 if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
@@ -29,16 +39,15 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
     }
 
     if ($form_ready) {
-        // $db = new DbManager();
-        $err = DbManager::addUser(
+        $ret = DbManager::addUser(
             htmlspecialchars($_POST["login"]),
             htmlspecialchars($_POST["prenom"]),
             htmlspecialchars($_POST["nom"]),
             htmlspecialchars($_POST["password"])
         );
-        if ($err !== "") {
+        if (!$ret['result']) {
             $form_ready = false;
-            $error_messages[] = $err;
+            $error_messages[] = $ret['error'];
         } else {
 
             header("Location: ./connexion.php");
