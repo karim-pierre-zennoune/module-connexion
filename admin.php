@@ -5,6 +5,7 @@ données. -->
 
 <?php require_once "./managers/sessionmanager.php" ?>
 
+
 <?php
 
 
@@ -42,6 +43,7 @@ if (!$ret['result']) { ?>
 <body>
     <?php include "navbar.php"; ?>
 
+
     <table>
         <thead>
             <tr>
@@ -60,10 +62,10 @@ if (!$ret['result']) { ?>
                         <td><?= $cell ?></td>
                     <?php } ?>
                 </tr>
-
             <?php } ?>
         </tbody>
     </table>
+
 </body>
 
 </html>

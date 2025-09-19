@@ -6,6 +6,7 @@ l’utilisateur est considéré comme connecté et une (ou plusieurs) variables 
 session sont créées. -->
 
 <?php require_once "./managers/sessionmanager.php" ?>
+<?php require_once "./utils.php" ?>
 
 <?php
 
@@ -22,6 +23,11 @@ $form_ready = true;
 if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
     $field_list = ["login", "password"];
     $error_messages = [];
+
+    if (!verify_csrf_token($_POST['csrf_token'])) {
+        $form_ready = false;
+        $error_messages[] = "Token CSRF invalide";
+    }
 
     foreach ($field_list as $field) {
         if (!(isset($_POST[$field]) && !empty(trim($_POST[$field])))) {
@@ -54,6 +60,7 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
     <?php include "navbar.php"; ?>
     <div>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
             <div>
                 <label for="form-login" hidden>login</label>
                 <div><input id="form-login" type="text" name="login" placeholder="login" autofocus></div>

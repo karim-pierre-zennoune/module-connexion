@@ -5,6 +5,7 @@ utilisateur remplit ce formulaire, les données sont insérées dans la base de
 données et l’utilisateur est redirigé vers la page de connexion. -->
 
 <?php require_once "./managers/sessionmanager.php" ?>
+<?php require_once "./utils.php" ?>
 
 <?php
 
@@ -22,6 +23,12 @@ $form_ready = true;
 if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
     $field_list = ["login", "prenom", "nom", "password", "password-confirm"];
     $error_messages = [];
+
+    if (!verify_csrf_token($_POST['csrf_token'])) {
+        $form_ready = false;
+        $error_messages[] = "Token CSRF invalide";
+    }
+
 
     foreach ($field_list as $field) {
         if (!(isset($_POST[$field]) && !empty(trim($_POST[$field])))) {
@@ -76,6 +83,7 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
 
     <div>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
             <div>
                 <label for="form-login" hidden>login</label>
                 <div><input id="form-login" type="text" name="login" placeholder="login" autofocus></div>

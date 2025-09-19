@@ -5,7 +5,7 @@
 
 $filename = pathinfo($_SERVER['PHP_SELF'])['filename'];
 
-if (isset($_POST["action"]) && $_POST["action"] === "logout") {
+if (isset($_POST["action"]) && $_POST["action"] === "Logout") {
     SessionManager::logout();
 }
 
@@ -19,7 +19,7 @@ if (SessionManager::is_logged()) { ?>
         <?php } ?>
         <li class="right">
             <form method="post">
-                <input class="logoutbtn" type="submit" name="action" class="button" value="logout" />
+                <input class="logoutbtn" type="submit" name="action" class="button" value="Logout" />
             </form>
 
         </li>
