@@ -35,15 +35,20 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
     }
 
     if ($form_ready) {
-        DbManager::updateUserInfos(
+        $ret = DbManager::updateUserInfos(
             $_POST["login"],
             $_POST["prenom"],
             $_POST["nom"],
             $_SESSION["id"],
 
         );
-        $_SESSION["login"] = $_POST["login"];
-        $_SESSION["prenom"] = $_POST["prenom"];
+        if (!$ret['result']) {
+            $form_ready = false;
+            $error_messages[] = $ret['error'];
+        } else {
+            $_SESSION["login"] = $_POST["login"];
+            $_SESSION["prenom"] = $_POST["prenom"];
+        }
     }
 }
 

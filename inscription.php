@@ -56,7 +56,7 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
             $form_ready = false;
             $error_messages[] = $ret['error'];
         } else {
-
+            // var_dump($ret);
             header("Location: ./connexion.php");
             exit();
         }

@@ -12,20 +12,18 @@ class DbManager
         }
 
         $sql = "SELECT id FROM utilisateurs WHERE login = :login";
-        if ($stmt = self::$pdo->prepare($sql)) {
-            $stmt->bindParam(":login", $login, PDO::PARAM_STR);
-            if ($stmt->execute()) {
-                if ($stmt->rowCount() == 1) {
-                    return [
-                        "result" => false,
-                        "error" => "login already exists"
-                    ];
-                }
-            } else {
-                throw new Exception('Something went wrong');
-            }
-            unset($stmt);
+        $stmt = self::$pdo->prepare($sql);
+        $stmt->bindParam(":login", $login, PDO::PARAM_STR);
+        $stmt->execute();
+
+        if ($stmt->rowCount() == 1) {
+            return [
+                "result" => false,
+                "error" => "login already exists"
+            ];
         }
+        unset($stmt);
+
 
         $sql = "INSERT INTO utilisateurs (login, prenom, nom, password) VALUES (:login, :prenom, :nom, :password)";
 
@@ -35,9 +33,7 @@ class DbManager
             $stmt->bindParam(":nom", $nom, PDO::PARAM_STR);
             $param_password = password_hash($password, PASSWORD_DEFAULT);
             $stmt->bindParam(":password", $param_password, PDO::PARAM_STR);
-            if (!$stmt->execute()) {
-                throw new Exception('Something went wrong');
-            }
+            $stmt->execute();
             unset($stmt);
         }
 
@@ -129,7 +125,18 @@ class DbManager
             self::connectToDb();
         }
 
-        // $sql = "SELECT id FROM utilisateurs WHERE login = :login"
+        $sql = "SELECT id FROM utilisateurs WHERE login = :login AND id != :id";
+        $stmt = self::$pdo->prepare($sql);
+        $stmt->bindParam(":login", $login, PDO::PARAM_STR);
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+        $stmt->execute();
+        if ($stmt->rowCount() == 1) {
+            return [
+                "result" => false,
+                "error" => "login already exists"
+            ];
+        }
+        unset($stmt);
 
 
 
