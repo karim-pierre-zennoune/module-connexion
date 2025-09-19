@@ -58,26 +58,27 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
 
 <body>
     <?php include "navbar.php"; ?>
+
+    <div class="errors">
+        <?php
+        if (!$form_ready) {
+            foreach ($error_messages as $err) { ?>
+                <p> <?= $err ?> </p> <?php
+            }
+        }
+        ?>
+    </div>
     <div class="form-wrapper">
         <div class="form">
 
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                 <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
-
                 <div class="input-container ic1">
                     <input class="input" id="form-login" type="text" name="login" placeholder=" "
                         autocomplete="username" autofocus required>
-
-                    <div class="cut">
-                    </div>
-
-
+                    <div class="cut"></div>
                     <label class="placeholder" for="form-login">Login</label>
-
                 </div>
-
-
-
                 <div class="input-container ic2">
                     <input class="input" id="form-password" type="password" name="password" placeholder=" "
                         autocomplete="current-password" title="Password" required>
@@ -85,15 +86,10 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
                     </div>
                     <label class="placeholder" for="form-password">Password</label>
                 </div>
-
                 <button type="submit" class="submit" name="submit" value="Envoyer">Submit</button>
-                <!-- <input type="submit" name="submit"> -->
-
-
             </form>
         </div>
     </div>
-
 
     <div>
         <?php

@@ -58,31 +58,31 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./style.css" rel="stylesheet" />
-
-
     <title>Change Password</title>
 </head>
 
 <body>
     <?php include "navbar.php"; ?>
+    <div class="errors">
+        <?php
+        if (!$form_ready) {
+            foreach ($error_messages as $err) { ?>
+                <p> <?= $err ?> </p> <?php
+            }
+        }
+        ?>
+    </div>
+
     <div class="form-wrapper">
         <div class="form">
-
-
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                 <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
-
-
-
-
                 <div class="input-container ic1">
                     <input class="input" id="form-old-password" type="password" name="form-old-password" placeholder=" "
                         autocomplete="current-password" title="Current Password" autofocus required>
                     <div class="cut"></div>
                     <label class="placeholder" for="form-old-password">Password</label>
-
                 </div>
-
 
                 <div class="input-container ic2">
                     <input class="input" id="form-new-password" type="password" name="form-new-password" placeholder=" "
@@ -90,8 +90,6 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
                     <div class="cut"> </div>
                     <label class="placeholder" for="form-new-password">New Password</label>
                 </div>
-
-
 
                 <div class="input-container ic2">
                     <input class="input" id="form-confirm-password" type="password" name="form-confirm-password"
@@ -101,86 +99,9 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
                 </div>
 
                 <button type="submit" class="submit" name="submit" value="Envoyer">Submit</button>
-
-                <!-- <input class="submit" type="submit" name="submit"> -->
-
-
-
-
-
-
-
             </form>
-            <div>
-                <?php
-                if (!$form_ready) {
-                    foreach ($error_messages as $err) { ?>
-                        <p> <?= $err ?> </p> <?php
-                    }
-                }
-                ?>
-            </div>
         </div>
-
-
-
-
     </div>
-
-
 </body>
 
 </html>
-
-
-
-<!-- <div class="form">
-
-      <div class="input-container ic1">
-        <input id="firstname" class="input" type="text" placeholder=" " />
-        <div class="cut"></div>
-        <label for="firstname" class="placeholder">First name</label>
-      </div>
-
-      <div class="input-container ic2">
-        <input id="lastname" class="input" type="text" placeholder=" " />
-        <div class="cut"></div>
-        <label for="lastname" class="placeholder">Last name</label>
-      </div>
-
-      <div class="input-container ic2">
-        <input id="email" class="input" type="text" placeholder=" " />
-        <div class="cut cut-short"></div>
-        <label for="email" class="placeholder">Email</>
-      </div>
-      <button type="text" class="submit">submit</button>
-    </div> -->
-
-
-
-
-<!-- <div class="form-wrapper">
-
-        <div class="form">
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                <div>
-                    <label for="form-old-password" hidden>password</label>
-                    <div><input id="form-old-password" type="text" name="form-old-password" placeholder="password"
-                            autofocus>
-                    </div>
-                </div>
-                <div>
-                    <label for="form-new-password" hidden>new password</label>
-                    <div><input id="form-new-password" type="text" name="form-new-password" placeholder="new password">
-                    </div>
-                </div>
-                <div>
-                    <label for="form-confirm-password" hidden>confirm new password</label>
-                    <div><input id="form-confirm-password" type="text" name="form-confirm-password"
-                            placeholder="confirm new password"></div>
-                </div>
-                <input type="submit" name="submit">
-            </form>
-        </div>
-
-    </div> -->

@@ -29,8 +29,6 @@ if (SessionManager::is_logged()) { ?>
     <ul class="topnav">
         <li><a class="<?= $filename === "index" ? "active" : "" ?>" href="./index.php">Home</a></li>
         <li><a class="<?= $filename === "inscription" ? "active" : "" ?>" href="./inscription.php">Register</a></li>
-
-
         <li class="right"><a class="<?= $filename === "connexion" ? "active" : "" ?>" href="./connexion.php">Login</a></li>
     </ul>
 

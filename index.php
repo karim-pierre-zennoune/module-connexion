@@ -39,9 +39,6 @@ sont actuellement stockées en base de données. -->
         <?php
     }
     ?>
-
-
-    <!-- TODO page presentation -->
     <p>Site du projet Module Connexion de LaPlateforme_</p>
 
 

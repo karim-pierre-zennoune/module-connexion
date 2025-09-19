@@ -57,8 +57,6 @@ if (!$form_prefill["result"]) {
     die();
 }
 
-
-
 ?>
 
 
@@ -73,11 +71,21 @@ if (!$form_prefill["result"]) {
     <link href="./style.css" rel="stylesheet" />
 
 
-    <title>Inscription</title>
+    <title>Profile</title>
 </head>
 
 <body>
     <?php include "navbar.php"; ?>
+    <div class="errors">
+        <?php
+        if (!$form_ready) {
+            foreach ($error_messages as $err) { ?>
+                <p> <?= $err ?> </p> <?php
+            }
+        }
+        ?>
+    </div>
+
     <div class="form-wrapper">
         <div class="form">
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
@@ -113,25 +121,9 @@ if (!$form_prefill["result"]) {
                 </div>
 
                 <button type="submit" class="submit" name="submit" value="Envoyer">Submit</button>
-
-                <!-- <input type="submit" name="submit"> -->
-
             </form>
         </div>
     </div>
-
-
-    <div>
-
-        <?php
-        if (!$form_ready) {
-            foreach ($error_messages as $err) { ?>
-                <p> <?= $err ?> </p> <?php
-            }
-        }
-        ?>
-
-
     </div>
 
 
