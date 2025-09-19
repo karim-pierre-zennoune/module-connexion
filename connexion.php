@@ -58,23 +58,43 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
 
 <body>
     <?php include "navbar.php"; ?>
-    <div>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
-            <div>
-                <label for="form-login" hidden>login</label>
-                <div><input id="form-login" type="text" name="login" placeholder="login" autofocus></div>
-            </div>
+    <div class="form-wrapper">
+        <div class="form">
 
-            <div>
-                <label for="form-password" hidden>password</label>
-                <div><input id="form-password" type="text" name="password" placeholder="password">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
+
+                <div class="input-container ic1">
+                    <input class="input" id="form-login" type="text" name="login" placeholder=" "
+                        autocomplete="username" autofocus required>
+
+                    <div class="cut">
+                    </div>
+
+
+                    <label class="placeholder" for="form-login">Login</label>
+
                 </div>
-            </div>
 
-            <input type="submit" name="submit">
-        </form>
+
+
+                <div class="input-container ic2">
+                    <input class="input" id="form-password" type="password" name="password" placeholder=" "
+                        autocomplete="current-password" title="Password" required>
+                    <div class="cut">
+                    </div>
+                    <label class="placeholder" for="form-password">Password</label>
+                </div>
+
+                <button type="submit" class="submit" name="submit" value="Envoyer">Submit</button>
+                <!-- <input type="submit" name="submit"> -->
+
+
+            </form>
+        </div>
     </div>
+
+
     <div>
         <?php
         if (!$form_ready) {

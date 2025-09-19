@@ -128,6 +128,11 @@ class DbManager
         if (self::$pdo === null) {
             self::connectToDb();
         }
+
+        // $sql = "SELECT id FROM utilisateurs WHERE login = :login"
+
+
+
         $sql = "UPDATE utilisateurs SET login = :login, prenom = :prenom, nom = :nom WHERE id = :id";
 
         if ($stmt = self::$pdo->prepare($sql)) {

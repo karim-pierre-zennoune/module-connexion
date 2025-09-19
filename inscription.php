@@ -81,35 +81,56 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
 <body>
     <?php include "navbar.php"; ?>
 
-    <div>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
-            <div>
-                <label for="form-login" hidden>login</label>
-                <div><input id="form-login" type="text" name="login" placeholder="login" autofocus></div>
-            </div>
-            <div>
-                <label for="form-prenom" hidden>prenom</label>
-                <div><input id="form-prenom" type="text" name="prenom" placeholder="prenom">
+    <div class="form-wrapper">
+        <div class="form">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
+
+
+                <div class="input-container ic1">
+                    <input class="input" id="form-login" type="text" name="login" placeholder=" " title="Login"
+                        autocomplete="username" autofocus required>
+                    <div class="cut">
+                    </div>
+                    <label class="placeholder" for="form-login">Login</label>
                 </div>
-            </div>
-            <div>
-                <label for="form-nom" hidden>nom</label>
-                <div><input id="form-nom" type="text" name="nom" placeholder="nom"></div>
-            </div>
-            <div>
-                <label for="form-password" hidden>password</label>
-                <div><input id="form-password" type="text" name="password" placeholder="password">
+
+
+                <div class="input-container ic2">
+                    <input class="input" id="form-prenom" type="text" name="prenom" placeholder=" " title="Prenom"
+                        required>
+                    <div class="cut">
+                    </div>
+                    <label class="placeholder" for="form-prenom">Prenom</label>
                 </div>
-            </div>
-            <div>
-                <label for="form-password-confirm" hidden>confirm password</label>
-                <div><input id="form-password-confirm" type="text" name="password-confirm"
-                        placeholder="confirm password">
+
+                <div class="input-container ic2">
+                    <input class="input" id="form-nom" type="text" name="nom" placeholder=" " title="Nom" required>
+                    <div class="cut">
+                    </div>
+                    <label class="placeholder" for="form-nom">Nom</label>
                 </div>
-            </div>
-            <input type="submit" name="submit">
-        </form>
+
+                <div class="input-container ic2">
+                    <input class="input" id="form-password" type="password" name="password" placeholder=" "
+                        title="Password" autocomplete="new-password" required>
+                    <div class="cut">
+                    </div>
+                    <label class="placeholder" for="form-password">Password</label>
+                </div>
+
+                <div class="input-container ic2">
+                    <input class="input" id="form-password-confirm" type="password" name="password-confirm"
+                        placeholder=" " autocomplete="new-password" title="New Password" required>
+                    <div class="cut">
+                    </div>
+                    <label class="placeholder" for="form-password-confirm">Confirm Password</label>
+                </div>
+
+                <button type="submit" class="submit" name="submit" value="Envoyer">Submit</button>
+                <!-- <input type="submit" name="submit"> -->
+            </form>
+        </div>
     </div>
 
 

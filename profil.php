@@ -73,28 +73,46 @@ if (!$form_prefill["result"]) {
 
 <body>
     <?php include "navbar.php"; ?>
-    <div>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
-            <div>
-                <label for="form-login" hidden>login</label>
-                <div><input id="form-login" type="text" name="login" placeholder="login"
-                        value="<?= $form_prefill["data"]["login"] ?>" autofocus></div>
-            </div>
-            <div>
-                <label for="form-prenom" hidden>prenom</label>
-                <div><input id="form-prenom" type="text" name="prenom" value="<?= $form_prefill["data"]["prenom"] ?>"
-                        placeholder="prenom">
-                </div>
-            </div>
-            <div>
-                <label for="form-nom" hidden>nom</label>
-                <div><input id="form-nom" type="text" name="nom" value="<?= $form_prefill["data"]["nom"] ?>"
-                        placeholder="nom"></div>
-            </div>
+    <div class="form-wrapper">
+        <div class="form">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
 
-            <input type="submit" name="submit">
-        </form>
+
+                <div class="input-container ic1">
+                    <input class="input" id="form-login" type="text" name="login" placeholder=" " title="Login"
+                        value="<?= $form_prefill["data"]["login"] ?>" autofocus>
+
+                    <div class="cut">
+                    </div>
+                    <label class="placeholder" for="form-login">Login</label>
+                </div>
+
+
+                <div class="input-container ic2">
+
+                    <input class="input" id="form-prenom" type="text" name="prenom"
+                        value="<?= $form_prefill["data"]["prenom"] ?>" placeholder=" " title="Prenom">
+                    <div class="cut">
+                    </div>
+                    <label class="placeholder" for="form-prenom">Prenom</label>
+                </div>
+
+
+                <div class="input-container ic2">
+                    <input class="input" id="form-nom" type="text" name="nom"
+                        value="<?= $form_prefill["data"]["nom"] ?>" placeholder=" " title="Nom">
+                    <div class="cut">
+                    </div>
+                    <label class="placeholder" for="form-nom">Nom</label>
+                </div>
+
+                <button type="submit" class="submit" name="submit" value="Envoyer">Submit</button>
+
+                <!-- <input type="submit" name="submit"> -->
+
+            </form>
+        </div>
     </div>
 
 

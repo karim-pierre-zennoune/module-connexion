@@ -71,40 +71,63 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Envoyer") {
 
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                 <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
-                <div>
-                    <label for="form-old-password" hidden>password</label>
-                    <div><input id="form-old-password" type="text" name="form-old-password" placeholder="password"
-                            autofocus>
-                    </div>
+
+
+
+
+                <div class="input-container ic1">
+                    <input class="input" id="form-old-password" type="password" name="form-old-password" placeholder=" "
+                        autocomplete="current-password" title="Current Password" autofocus required>
+                    <div class="cut"></div>
+                    <label class="placeholder" for="form-old-password">Password</label>
+
                 </div>
 
 
-                <div>
-                    <label for="form-new-password" hidden>new password</label>
-                    <div><input id="form-new-password" type="text" name="form-new-password" placeholder="new password">
-                    </div>
+                <div class="input-container ic2">
+                    <input class="input" id="form-new-password" type="password" name="form-new-password" placeholder=" "
+                        autocomplete="new-password" title="New Password" required>
+                    <div class="cut"> </div>
+                    <label class="placeholder" for="form-new-password">New Password</label>
                 </div>
-                <div>
-                    <label for="form-confirm-password" hidden>confirm new password</label>
-                    <div><input id="form-confirm-password" type="text" name="form-confirm-password"
-                            placeholder="confirm new password"></div>
+
+
+
+                <div class="input-container ic2">
+                    <input class="input" id="form-confirm-password" type="password" name="form-confirm-password"
+                        placeholder=" " autocorrect="new-password" title="Confirm New Password" required>
+                    <div class="cut"></div>
+                    <label class="placeholder" for="form-confirm-password">Confirm New Password</label>
                 </div>
-                <input type="submit" name="submit">
+
+                <button type="submit" class="submit" name="submit" value="Envoyer">Submit</button>
+
+                <!-- <input class="submit" type="submit" name="submit"> -->
+
+
+
+
+
+
+
             </form>
+            <div>
+                <?php
+                if (!$form_ready) {
+                    foreach ($error_messages as $err) { ?>
+                        <p> <?= $err ?> </p> <?php
+                    }
+                }
+                ?>
+            </div>
         </div>
 
+
+
+
     </div>
 
 
-    <div>
-        <?php
-        if (!$form_ready) {
-            foreach ($error_messages as $err) { ?>
-                <p> <?= $err ?> </p> <?php
-            }
-        }
-        ?>
-    </div>
 </body>
 
 </html>
