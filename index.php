@@ -34,12 +34,12 @@ sont actuellement stockées en base de données. -->
     <?php
     if (SessionManager::is_logged() && isset($_SESSION["prenom"])) { ?>
 
-        <p class="warning">Welcome <?= $_SESSION["prenom"] ?> </p>
+        <p class="warning message">Welcome <?= $_SESSION["prenom"] ?> </p>
 
         <?php
     }
     ?>
-    <p>Site du projet Module Connexion de LaPlateforme_</p>
+    <p class="message">Site du projet Module Connexion de LaPlateforme_</p>
 
 
 </body>
