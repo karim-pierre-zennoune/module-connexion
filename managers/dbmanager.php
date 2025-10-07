@@ -17,6 +17,7 @@ class DbManager
         $stmt->execute();
 
         if ($stmt->rowCount() == 1) {
+            unset($stmt);
             return [
                 "result" => false,
                 "error" => "login already exists"
@@ -34,9 +35,15 @@ class DbManager
             $param_password = password_hash($password, PASSWORD_DEFAULT);
             $stmt->bindParam(":password", $param_password, PDO::PARAM_STR);
             $stmt->execute();
+        } else {
             unset($stmt);
+            return [
+                "result" => false,
+                "error" => "Something went wrong"
+            ];
         }
 
+        unset($stmt);
         return [
             "result" => true,
             "error" => ""
@@ -56,23 +63,13 @@ class DbManager
             if ($stmt->execute()) {
                 if ($stmt->rowCount() == 1) {
                     if ($row = $stmt->fetch()) {
-
+                        unset($stmt);
                         return password_verify($password, $row["password"]);
-                        // if (password_verify($password, $row["password"])) {
-                        //     return true;
-                        // } else {
-                        //     return false;
-                        // }
-
-
                     }
-
                 }
-
             }
         }
         unset($stmt);
-
     }
 
     public static function connectUser($login, $password)
@@ -89,6 +86,7 @@ class DbManager
                 if ($stmt->rowCount() == 1) {
                     if ($row = $stmt->fetch()) {
                         if (password_verify($password, $row["password"])) {
+                            unset($stmt);
                             return [
                                 "result" => true,
                                 "data" => [
@@ -99,14 +97,15 @@ class DbManager
                                 ]
                             ];
                         } else {
+                            unset($stmt);
                             return [
                                 "result" => false,
                                 "error" => "Invalid credentials"
                             ];
                         }
                     }
-
                 } else {
+                    unset($stmt);
                     return [
                         "result" => false,
                         "error" => "Invalid credentials"
@@ -116,6 +115,10 @@ class DbManager
             }
         }
         unset($stmt);
+        return [
+            "result" => false,
+            "error" => "Something went wrong"
+        ];
 
     }
 
@@ -131,6 +134,7 @@ class DbManager
         $stmt->bindParam(":id", $id, PDO::PARAM_INT);
         $stmt->execute();
         if ($stmt->rowCount() == 1) {
+            unset($stmt);
             return [
                 "result" => false,
                 "error" => "login already exists"
@@ -149,6 +153,16 @@ class DbManager
             $stmt->bindParam(":nom", $nom, PDO::PARAM_STR);
             $stmt->execute();
             unset($stmt);
+            return [
+                "result" => true,
+                "error" => ""
+            ];
+        } else {
+            unset($stmt);
+            return [
+                "result" => false,
+                "error" => "Something went wrong"
+            ];
         }
     }
 
@@ -170,6 +184,12 @@ class DbManager
                 return [
                     "result" => true,
                     "error" => "Successfully changed password"
+                ];
+            } else {
+                unset($stmt);
+                return [
+                    "result" => false,
+                    "error" => "Something went wrong"
                 ];
             }
         } else {
@@ -202,20 +222,33 @@ class DbManager
         if ($stmt = self::$pdo->prepare($sql)) {
             if ($stmt->execute()) {
                 if ($data = $stmt->fetchAll(PDO::FETCH_ASSOC)) {
+                    unset($stmt);
                     return [
                         "result" => true,
                         "data" => $data
                     ];
 
                 } else {
+                    unset($stmt);
                     return [
                         "result" => false,
                         "error" => "Could not fetch data"
                     ];
                 }
+            } else {
+                unset($stmt);
+                return [
+                    "result" => false,
+                    "error" => "Something went wrong"
+                ];
             }
+        } else {
+            unset($stmt);
+            return [
+                "result" => false,
+                "error" => "Something went wrong"
+            ];
         }
-        unset($stmt);
     }
 
     public static function getUserInfos(int $id)
@@ -246,6 +279,12 @@ class DbManager
                     "error" => "Invalid credentials"
                 ];
             }
+        } else {
+            unset($stmt);
+            return [
+                "result" => false,
+                "error" => "Something went wrong"
+            ];
         }
     }
 
